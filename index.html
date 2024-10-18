@@ -1,13 +1,40 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <title>MyDreamApp</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="stylesheet" href="styles.09e2c710755c8867a460.css"></head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+</head>
 <body>
-  <app-root></app-root>
-<script src="polyfills-es5.3aa54d3e5134f5b5b842.js" nomodule defer></script><script src="polyfills-es2015.fd917e7c3ed57f282ee5.js" type="module"></script><script src="runtime-es2015.24b02acc1f369d9b9f37.js" type="module"></script><script src="main-es2015.2aeb6bc0fba907793568.js" type="module"></script><script src="runtime-es5.24b02acc1f369d9b9f37.js" nomodule defer></script><script src="main-es5.2aeb6bc0fba907793568.js" nomodule defer></script></body>
+    <h1 id="message">Digite seu nome e clique no botão:</h1>
+    <input type="text" id="nameInput" placeholder="Seu nome">
+    <button onclick="sayHello()">Dizer Olá</button>
+
+    <script>
+              if ('connection' in navigator) {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const type = connection.effectiveType;
+
+    console.log(`Tipo de conexão: ${type}`);
+
+    // Verifica se está usando rede móvel
+    if (type.includes('cellular')) {
+        document.getElementById("message").innerText = 'O usuário está usando uma rede móvel';
+    } else if (type === 'wifi' || type === 'ethernet') {
+        document.getElementById("message").innerText = 'O usuário está usando Wi-Fi ou Ethernet';
+    } else {
+         document.getElementById("message").innerText = 'Tipo de conexão desconhecido ou não detectado';
+    }
+} else {
+    document.getElementById("message").innerText = 'A API Network Information não é suportada neste navegador.';
+}
+        function sayHello() {
+            var name = document.getElementById("nameInput").value;
+            if (name) {
+                document.getElementById("message").innerText = navigator.connection.effectiveType;
+            } else {
+                document.getElementById("message").innerText = "Hello, World!";
+            }
+        }
+    </script>
+</body>
 </html>
