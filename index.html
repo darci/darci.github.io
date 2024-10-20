@@ -5,36 +5,33 @@
     <title>Hello World</title>
 </head>
 <body>
-    <h1 id="message">Digite seu nome e clique no botão:</h1>
-    <input type="text" id="nameInput" placeholder="Seu nome">
-    <button onclick="sayHello()">Dizer Olá</button>
+    <p id="connection"></p>
+    <p id="connectionDetail"></p>
+    <p id="mozConnection"></p>
+    <p id="webkitConnection"></p>
 
     <script>
-              if ('connection' in navigator) {
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const type = connection.effectiveType;
 
-    console.log(`Tipo de conexão: ${type}`);
-
-    // Verifica se está usando rede móvel
-    if (type.includes('cellular')) {
-        document.getElementById("message").innerText = 'O usuário está usando uma rede móvel';
-    } else if (type === 'wifi' || type === 'ethernet') {
-        document.getElementById("message").innerText = 'O usuário está usando Wi-Fi ou Ethernet';
-    } else {
-         document.getElementById("message").innerText = 'Tipo de conexão desconhecido ou não detectado';
-    }
-} else {
-    document.getElementById("message").innerText = 'A API Network Information não é suportada neste navegador.';
-}
-        function sayHello() {
-            var name = document.getElementById("nameInput").value;
-            if (name) {
-                document.getElementById("message").innerText = navigator.connection.effectiveType;
-            } else {
-                document.getElementById("message").innerText = "Hello, World!";
+if ('connection' in navigator) {
+            document.getElementById("connection").innerText = "Contem 'connection' in navigator"
+        }else{
+            document.getElementById("connection").innerText = "Nao contem 'connection' in navigator"
             }
+
+        if ('mozConnection' in navigator) {
+            document.getElementById("mozConnection").innerText = "Contem 'mozConnection' in navigator"
+        }else{
+            document.getElementById("mozConnection").innerText = "Nao contem 'mozConnection' in navigator"
+            }
+
+        if ('webkitConnection' in navigator) {
+            document.getElementById("webkitConnection").innerText = "Contem 'webkitConnection' in navigator"
+        }else{
+            document.getElementById("webkitConnection").innerText = "Nao contem 'webkitConnection' in navigator"
         }
+                
     </script>
 </body>
 </html>
+
+
