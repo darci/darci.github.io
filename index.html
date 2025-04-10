@@ -1,37 +1,217 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Hello World</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - Terminal</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
+            padding: 20px;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .terminal {
+            background-color: #0d0d0d;
+            border-radius: 8px;
+            border: 1px solid #333;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            flex-grow: 1;
+            overflow: auto;
+        }
+        
+        .terminal-header {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .red { background-color: #ff5f56; }
+        .yellow { background-color: #ffbd2e; }
+        .green { background-color: #27c93f; }
+        
+        .terminal-title {
+            color: #ccc;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+        
+        .prompt {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .command {
+            color: #ffffff;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #00ff00;
+            animation: blink 1s step-end infinite;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .output {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        
+        .ascii-art {
+            color: #00cc00;
+            font-weight: bold;
+            white-space: pre;
+            line-height: 1.2;
+            margin: 20px 0;
+        }
+        
+        #countdown {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .terminal {
+                padding: 10px;
+            }
+            
+            .ascii-art {
+                font-size: 0.7em;
+            }
+        }
+    </style>
 </head>
 <body>
-    <p id="connection"></p>
-    <p id="connectionDetail"></p>
-    <p id="mozConnection"></p>
-    <p id="webkitConnection"></p>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-button red"></div>
+            <div class="terminal-button yellow"></div>
+            <div class="terminal-button green"></div>
+            <div class="terminal-title">user@server:~/site</div>
+        </div>
+        
+        <div class="terminal-content">
+            <span class="prompt">user@server:~/site$ <span class="command">ls -la</span></span>
+            <div class="output">
+                total 16<br>
+                drwxr-xr-x  2 user user 4096 Apr 10 14:32 .<br>
+                drwxr-xr-x 18 user user 4096 Apr 10 14:32 ..<br>
+                -rw-r--r--  1 user user  982 Apr 10 14:32 index.html<br>
+                -rw-r--r--  1 user user  512 Apr 10 14:32 coming-soon.sh
+            </div>
+            
+            <span class="prompt">user@server:~/site$ <span class="command">cat coming-soon.sh</span></span>
+            <div class="output">
+                #!/bin/bash<br>
+                echo "Initializing website deployment..."<br>
+                echo "Status: Under Construction"<br>
+                echo "ETA: Coming Soon"
+            </div>
+            
+            <span class="prompt">user@server:~/site$ <span class="command">./coming-soon.sh</span></span>
+            <div class="output">
+                Initializing website deployment...<br>
+                Status: Under Construction<br>
+                ETA: Coming Soon
+            </div>
+            
+            <span class="prompt">user@server:~/site$ <span class="command">echo "Website Launch Imminent"</span></span>
+            <div class="output">Website Launch Imminent</div>
+            
+            <span class="prompt">user@server:~/site$ <span class="command">./banner.sh</span></span>
+            <div class="ascii-art">
+  _____                _                _____                    
+ / ____|              (_)              / ____|                   
+| |     ___  _ __ ___  _ _ __   __ _  | (___   ___   ___  _ __  
+| |    / _ \| '_ ` _ \| | '_ \ / _` |  \___ \ / _ \ / _ \| '_ \ 
+| |___| (_) | | | | | | | | | | (_| |  ____) | (_) | (_) | | | |
+ \_____\___/|_| |_| |_|_|_| |_|\__, | |_____/ \___/ \___/|_| |_|
+                                __/ |                            
+                               |___/                             
+            </div>
+            
+            <div class="output">
+                System: Loading website components...<br>
+                Progress: 78% complete<br>
+                Status: Final configurations in progress
+            </div>
+            
+            <div id="countdown">Site launch in: <span id="timer">00:00:00:00</span></div>
+            
+            <span class="prompt">user@server:~/site$ <span class="command"></span><span class="cursor"></span></span>
+        </div>
+    </div>
 
     <script>
-
-if ('connection' in navigator) {
-            document.getElementById("connection").innerText = "Contem 'connection' in navigator"
-        }else{
-            document.getElementById("connection").innerText = "Nao contem 'connection' in navigator"
+        // Simula digitação de comandos
+        function typeCommand(element, text, index, callback) {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                setTimeout(function() {
+                    typeCommand(element, text, index + 1, callback);
+                }, Math.random() * 150 + 30);
+            } else if (callback) {
+                setTimeout(callback, 500);
             }
-
-        if ('mozConnection' in navigator) {
-            document.getElementById("mozConnection").innerText = "Contem 'mozConnection' in navigator"
-        }else{
-            document.getElementById("mozConnection").innerText = "Nao contem 'mozConnection' in navigator"
-            }
-
-        if ('webkitConnection' in navigator) {
-            document.getElementById("webkitConnection").innerText = "Contem 'webkitConnection' in navigator"
-        }else{
-            document.getElementById("webkitConnection").innerText = "Nao contem 'webkitConnection' in navigator"
         }
+        
+        // Configuração do contador regressivo
+        function updateCountdown() {
+            // Define data futura (30 dias a partir de agora)
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 30);
+            
+            function update() {
+                const now = new Date();
+                const diff = futureDate - now;
                 
+                if (diff <= 0) {
+                    document.getElementById('timer').textContent = "00:00:00:00";
+                    return;
+                }
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('timer').textContent = 
+                    `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                setTimeout(update, 1000);
+            }
+            
+            update();
+        }
+        
+        // Inicializa o contador quando a página carrega
+        window.onload = function() {
+            updateCountdown();
+        };
     </script>
 </body>
 </html>
-
-
